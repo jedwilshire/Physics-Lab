@@ -24,7 +24,14 @@ class Application:
             * Each particle needs a random color choosen from the colors list
             * Note that randint(a, b) and choice(list) have been imported from the random module"""
             
-           
+        for i in range(NUM_PARTICLES):
+            x = randint(MAX_RADIUS, WIDTH - MAX_RADIUS)
+            y = randint(MAX_RADIUS, HEIGHT - MAX_RADIUS)
+            speed = randint(MIN_SPEED, MAX_SPEED)
+            radius = randint(MIN_RADIUS, MAX_RADIUS)
+            angle = randint(0, 359)
+            Particle(self, x, y, speed, angle, radius, choice(colors))
+            
     
     def application_loop(self):
         while self.running:
