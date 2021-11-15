@@ -1,0 +1,21 @@
+import pygame
+### SCREEN SETTINGS
+WIDTH = 800
+HEIGHT = 600
+FPS = 120
+
+### PARTICLE SETTINGS
+NUMBER_PARTICLES = 10
+MIN_SIZE = 10
+MAX_SIZE = 30
+MIN_SPEED = 300
+MAX_SPEED = 500
+GRAVITY = pygame.math.Vector2(0, 150)
+FRICTION = .025
+ELASTICITY = 1.0  # Out of 1 which is no energy loss in bounce
+EFFECTIVE_ZERO = 1.0
+
+### COLORS
+BLUE = (0, 0, 255)
+WHITE = (255, 255, 255)
+
