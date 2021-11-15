@@ -28,8 +28,8 @@ class Application:
             x = randint(MAX_RADIUS, WIDTH - MAX_RADIUS)
             y = randint(MAX_RADIUS, HEIGHT - MAX_RADIUS)
             speed = randint(MIN_SPEED, MAX_SPEED)
-            radius = randint(MIN_RADIUS, MAX_RADIUS)
-            angle = randint(0, 359)
+            radius = randint(MIN_RADIUS, MAX_RADIUS)           
+            angle = randint(180, 360)
             Particle(self, x, y, speed, angle, radius, choice(colors))
             
     

@@ -30,22 +30,25 @@ class Particle(pygame.sprite.Sprite):
 
         
     def update(self):
-        self.bounce()
-        # if the particle is not touching the bottom wall, set self.acc.y = GRAVITY
-        # otherwise set self.acc.y to -GRAVITY
-        if not self.touching_bottom_wall():
-            self.acc.y = GRAVITY
-        else:
-            self.acc.y = 0
+        if abs(self.vel.y) < EFFECTIVE_ZERO:
+            self.vel.y = 0
+        if abs(self.vel.x) < EFFECTIVE_ZERO:
+            self.vel.x = 0
+            
         # set self.friction to self.vel * FRICTION * self.app.dt
         self.friction = self.vel * FRICTION * self.app.dt
-        # change velocity vector using v = v + a*t.  a is self.acc and t is self.app.dt
-        self.vel += self.acc * self.app.dt
+        
         # change velocity vector by friction by subtracting friciton from it
         self.vel -= self.friction
-        # change position using p = 1/2*a*t + v * t + p p is self.pos
-        self.pos += 1 / 2 * self.acc * self.app.dt + self.vel * self.app.dt
+        
+        # change velocity vector using v = v + a*t.  a is self.acc and t is self.app.dt
+        self.vel += self.acc * self.app.dt
+        
+        # change position using p = 1/2*a*t^2 + v * t + p p is self.pos
+        self.pos +=  1 / 2 * self.acc * self.app.dt ** 2 + self.vel * self.app.dt
+                     
         # set the center of the particles rect to self.pos
+        self.bounce()
         self.rect.center = self.pos
     
     def touching_left_wall(self):
@@ -53,31 +56,29 @@ class Particle(pygame.sprite.Sprite):
         return self.pos.x <= self.radius
     
     def touching_right_wall(self):
-        return self.pos.x >= WIDTH - self.radius
+        return self.pos.x >= WIDTH - self.radius - 1
     
     def touching_top_wall(self):
         return self.pos.y <= self.radius
     
     def touching_bottom_wall(self):
         # moving down and touching bottom
-        return self.pos.y >= HEIGHT - self.radius
+        return self.pos.y >= HEIGHT - self.radius - 1
     
     def bounce(self):
         # if ball is touching left, right, top, or bottom wall AND moving towards it
-        # then set self.vel to self.vel.reflect(normal) and set position's
-        # proper component (Either x or y) at a radius distance away from wall
-        # where normal is the Normal Vector from the settings for the side being bounced off
+        # then set self.vel to self.vel.reflect(normal) * ELASTICITY
         if self.touching_left_wall() and self.vel.x < 0:
-            self.vel = self.vel.reflect(LEFT_WALL_NORMAL)
+            self.vel = self.vel.reflect(LEFT_WALL_NORMAL) * ELASTICITY
             self.pos.x = self.radius
         elif self.touching_right_wall() and self.vel.x > 0:
-            self.vel = self.vel.reflect(RIGHT_WALL_NORMAL)
+            self.vel = self.vel.reflect(RIGHT_WALL_NORMAL) * ELASTICITY
             self.pos.x = WIDTH - self.radius
         elif self.touching_top_wall() and self.vel.y < 0:
-            self.vel = self.vel.reflect(TOP_WALL_NORMAL)
+            self.vel = self.vel.reflect(TOP_WALL_NORMAL) * ELASTICITY
             self.pos.y = self.radius
         elif self.touching_bottom_wall() and self.vel.y > 0:
-            self.vel = self.vel.reflect(BOTTOM_WALL_NORMAL)
+            self.vel = self.vel.reflect(BOTTOM_WALL_NORMAL) * ELASTICITY
             self.pos.y = HEIGHT - self.radius
             
             
