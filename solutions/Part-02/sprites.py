@@ -69,16 +69,20 @@ class Particle(pygame.sprite.Sprite):
         # if ball is touching left, right, top, or bottom wall AND moving towards it
         # then set self.vel to self.vel.reflect(normal) * ELASTICITY
         if self.touching_left_wall() and self.vel.x < 0:
-            self.vel = self.vel.reflect(LEFT_WALL_NORMAL) * ELASTICITY
+            self.vel = self.vel.reflect(LEFT_WALL_NORMAL)
+            self.vel.x *= ELASTICITY
             self.pos.x = self.radius
         elif self.touching_right_wall() and self.vel.x > 0:
-            self.vel = self.vel.reflect(RIGHT_WALL_NORMAL) * ELASTICITY
+            self.vel = self.vel.reflect(RIGHT_WALL_NORMAL)
+            self.vel.x *= ELASTICITY
             self.pos.x = WIDTH - self.radius
         elif self.touching_top_wall() and self.vel.y < 0:
-            self.vel = self.vel.reflect(TOP_WALL_NORMAL) * ELASTICITY
+            self.vel = self.vel.reflect(TOP_WALL_NORMAL)
+            self.vel.y *= ELASTICITY
             self.pos.y = self.radius
         elif self.touching_bottom_wall() and self.vel.y > 0:
-            self.vel = self.vel.reflect(BOTTOM_WALL_NORMAL) * ELASTICITY
+            self.vel = self.vel.reflect(BOTTOM_WALL_NORMAL)
+            self.vel.y *= ELASTICITY
             self.pos.y = HEIGHT - self.radius
             
             

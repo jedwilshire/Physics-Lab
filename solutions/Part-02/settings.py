@@ -23,8 +23,8 @@ MIN_SPEED = 600
 MAX_SPEED = 800
 
 # Physics Settings
-GRAVITY = 350
-FRICTION = 0.1
+GRAVITY = 700
+FRICTION = 0.2
 ELASTICITY = 0.9
 LEFT_WALL_NORMAL = pygame.math.Vector2(1, 0)
 RIGHT_WALL_NORMAL = pygame.math.Vector2(-1, 0)
